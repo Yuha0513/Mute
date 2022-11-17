@@ -13,7 +13,7 @@ class MovieListSerializer(serializers.ModelSerializer):
         model = Movie
         fields = '__all__'
 
-# 리뷰
+# 리뷰 => 상세 조회, 수정, 삭제
 class ReviewSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
         class Meta:
@@ -52,7 +52,7 @@ class ActorSerializer(serializers.ModelSerializer):
         model = Actor
         fields = '__all__'
 
-# 리뷰 목록
+# 리뷰 목록 => 전체 목록 조회, 생성
 class ReviewListSerializer(serializers.ModelSerializer):
 
   # 리뷰가 달린 영화의 이름

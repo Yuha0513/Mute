@@ -50,21 +50,57 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 # 리뷰
-# 1. 리뷰 목록
-@api_view(['GET'])
-def review_list(request):
-    reviews = get_list_or_404(Review)
-    serializer = ReviewListSerializer(reviews, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
-# 2. 리뷰 상세
-@api_view(['DELETE', 'PUT', 'GET'])
+# # 1. 리뷰 목록 ( ReviewListSerialzier )
+# @api_view(['GET'])
+# def review_list(request):
+#     reviews = get_list_or_404(Review)
+#     serializer = ReviewListSerializer(reviews, many=True)
+#     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# # 2. 리뷰 생성 ( ReviewSerializer ) 
+# @api_view(["POST"],)
+# def review_create(request, movie_pk):
+#     movie = get_object_or_404(Movie, pk=movie_pk)
+#     serializer = ReviewSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save(movie=movie)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 1&2. 리뷰 목록 조회 및 생성 ( ReviewListSerializer) ( review_list_create )
+@api_view(['GET', 'POST'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def review_list_create(request, movie_pk):
+  if request.method == 'GET':
+    reviews = Review.objects.all().filter(movie_id=movie_pk)
+    serializer = ReviewListSerializer(reviews, many=True)
+    return Response(serializer.data)
+  else:
+    serializer = ReviewListSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+      movie = get_object_or_404(Movie, pk=request.data.get('movie'))
+      movie.save()
+      serializer.save(user=request.user)
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 3. 리뷰 상세 조회 ( ReviewSerializer )
+@api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     if request.method == 'GET':
         serializer = ReviewSerializer(review)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'PUT':
+
+# 3-1. 리뷰 수정 & 삭제 ( ReviewSerializer )
+@api_view(['DELETE', 'PUT'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def review_update_delete(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.method == 'PUT':
         serializer = ReviewSerializer(instance = review, data = request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -73,36 +109,28 @@ def review_detail(request, review_pk):
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# 3. 리뷰 생성
-@api_view(["POST"],)
-def review_create(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = ReviewSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(movie=movie)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-# 4. 리뷰 수정, 삭제
-@api_view(['PUT', 'DELETE'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
-def review_update_delete(request, review_pk):
-  review = get_object_or_404(Review, pk=review_pk)
-  if not request.user.reviews.filter(pk=review_pk).exists():
-    return Response({'message': 'unauthorized!'})
-  if request.method == 'PUT':
-    serializer = ReviewListSerializer(review, data=request.data)
-    if serializer.is_valid(raise_exception=True):
-      movie = get_object_or_404(Movie, pk=request.data.get('movie'))
-      movie.save()
-      serializer.save(user=request.user)
-      return Response(serializer.data)
-  else:
-    review = get_object_or_404(Review, pk=review_pk)
-    movie = get_object_or_404(Movie, pk=review.movie_id)
-    movie.save()
-    review.delete()
-    return Response({ 'id': review_pk })
+# 4. 리뷰 수정, 삭제 ( ReviewListSerializer ) ( review_update_delete )
+# 중복될 필요 없지 않나?
+# @api_view(['PUT', 'DELETE'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def review_update_delete(request, review_pk):
+#   review = get_object_or_404(Review, pk=review_pk)
+#   if not request.user.reviews.filter(pk=review_pk).exists():
+#     return Response({'message': 'unauthorized!'})
+#   if request.method == 'PUT':
+#     serializer = ReviewListSerializer(review, data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#       movie = get_object_or_404(Movie, pk=request.data.get('movie'))
+#       movie.save()
+#       serializer.save(user=request.user)
+#       return Response(serializer.data)
+#   else:
+#     review = get_object_or_404(Review, pk=review_pk)
+#     movie = get_object_or_404(Movie, pk=review.movie_id)
+#     movie.save()
+#     review.delete()
+#     return Response({ 'id': review_pk })
 
 # 리뷰 댓글
 # 1. 리뷰 댓글 생성
