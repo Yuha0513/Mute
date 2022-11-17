@@ -100,6 +100,8 @@ def review_detail(request, review_pk):
 @permission_classes([IsAuthenticated])
 def review_update_delete(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    if not request.user.reviews.filter(pk=review_pk).exists():
+      return Response({'message': 'unauthorized!'})
     if request.method == 'PUT':
         serializer = ReviewSerializer(instance = review, data = request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
