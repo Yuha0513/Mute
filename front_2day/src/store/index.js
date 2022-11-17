@@ -121,11 +121,12 @@ export default new Vuex.Store({
     followFunc(context) {
       context.commit('FOLLOW_FUNC')
     },
-    createReview({getters}, payload) {
+    createReview({getters, state}, payload) {
       axios({
         method: 'post',
         url:`${API_URL}/movies/movies/${payload.movieID}/reviews/`,
         data: {
+          user: state.user.pk,
           title: payload.title,
           content: payload.content
         },

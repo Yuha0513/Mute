@@ -2,7 +2,7 @@
   <div>
     <!-- <img :src="movie.poster_path"> -->
     {{ movie }}
-    <MovieComment
+    <MovieReview
     :movieID="movie?.id"
     />
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import axios from 'axios'
-import MovieComment from '@/components/MovieComment'
+import MovieReview from '@/components/MovieReview'
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -42,7 +42,7 @@ export default {
         this.getMovieDetail()
     },
     components: {
-        MovieComment
+        MovieReview
     }
 
 }

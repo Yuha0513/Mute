@@ -1,18 +1,9 @@
 <template>
   <div id="app">
-    <!-- <nav>
-      <router-link :to="{ name: 'movies' }">movie</router-link> |
-      <router-link :to="{ name: 'trip' }">trip</router-link> |
-      <router-link :to="{ name: 'user' }">user</router-link>  |
-      <router-link :to="{ name: 'signup' }">회원가입</router-link>  |
-      <router-link :to="{ name: 'login'}">LOGIN</router-link>  |
-      <button @click="logout">logout</button>
-    </nav> -->
-
     <nav class="navbar">
         <div class="navbar__logo">
             <i class="fab fa-accusoft"></i>
-            <a href="">Logo</a>
+            <p @click="goHome">Logo</p>
         </div>
 
         <ul class="navbar__menu">
@@ -20,6 +11,7 @@
             <li><router-link :to="{ name: 'trip' }">trip</router-link></li>
             <li><router-link :to="{ name: 'user' }">user</router-link></li>
             <li><router-link :to="{ name: 'signup' }">회원가입</router-link></li>
+            <li><router-link :to="{ name: 'login' }">로그인</router-link></li>
             <li><button @click="logout">logout</button></li>
         </ul>
 
@@ -43,7 +35,10 @@
     methods: {
       logout() {
         this.$store.dispatch('logout')
-      } 
+      },
+      goHome() {
+        this.$router.push({ name: 'home'})
+      }
     },
     computed: {
       isLogin() {
@@ -72,10 +67,6 @@
     --accent-color:#d49466;
 }
 
-body {
-    margin: 0px;
-    font-family: 'Open sans';
-}
 
 a {
     text-decoration: none;

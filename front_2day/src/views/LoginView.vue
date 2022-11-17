@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="login_container">
         <div class="main">
             <h3 class="logo">Login</h3>
             <form @submit.prevent class="container">
@@ -40,7 +40,8 @@ export default {
 </script>
 
 <style>
-.container{
+.login_container{
+    
     display: flex;
     flex-direction: column;
     align-items: center;

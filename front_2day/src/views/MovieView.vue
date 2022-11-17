@@ -2,7 +2,7 @@
   <div>
     <div v-for="movie in movies" :key="movie.id">
         {{ movie.title }}
-        <router-link :to="{ name: 'detail', params: { id:movie.id }}"> detail </router-link>
+        <button class="movie_button"><router-link :to="{ name: 'detail', params: { id:movie.id }}"> detail </router-link></button>
     </div>
   </div>
 </template>
@@ -71,5 +71,8 @@ export default {
 .box {
     width: 200px;
     height: 200px;
+}
+.movie_button {
+    color: black;
 }
 </style>
