@@ -16,15 +16,9 @@ $ python manage.py migrate
 
 - `movies/tmdb_views.py` 파일에서 **API_KEY** 에 TMDB API KEY 설정 
 
-
-
-
 > **view함수 실행**
 
 - 서버 실행한 후 movies/tmdb_views.py의 `tmdb_data()` 실행 
-
-
-
 
 > **dump**
 
