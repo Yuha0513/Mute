@@ -9,8 +9,9 @@
     <hr>
     <div v-for="review in reviews" :key="review.id" >
       <ul>
-        <li @click="reviewDetail"> 제목 : {{ review.title }} </li>
+        <li> 제목 : {{ review.title }} </li>
         <li> 작성자 : {{review.userName}} </li>
+        <button @click="reviewDelete(review, $event)">delete</button>
       </ul>
       <hr>
       
@@ -39,9 +40,10 @@ export default {
         this.title = '',
         this.content = ''
       },
-      reviewDetail() {
-        const movieid = this.movieID
-        this.$router.push({ name: 'review', params: { id:movieid }})
+
+      reviewDelete(event) {
+        this.$store.dispatch('reviewDelete', event)
+
       }
     },
     props: {
@@ -53,8 +55,9 @@ export default {
       }
     },
     created() {
-      const movieid = this.movieID
+      const movieid = this?.movieID
       this.$store.dispatch('getReview',movieid)
+
     }
 }
 </script>

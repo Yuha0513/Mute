@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <nav class="navbar">
         <div class="navbar__logo">
             <i class="fab fa-accusoft"></i>

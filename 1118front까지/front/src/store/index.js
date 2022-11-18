@@ -48,9 +48,12 @@ export default new Vuex.Store({
         state.is_followed = false
       }
     },
-    GET_REVIEW: (state, reviews) => state.reviews = reviews
+    GET_REVIEW (state, reviews) {
+      state.reviews = reviews
+    }
   },
   actions: {
+    // 영화 리스트 가져오기
     getMovies(context) {
       axios({
         method: 'get',
@@ -63,6 +66,7 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    // 로그인 관련
     signUp(context, payload) {
       axios({
         method: 'post',
@@ -95,7 +99,7 @@ export default new Vuex.Store({
     getUser({commit, getters}) {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/user/`,
+        url: `${API_URL}/accounts/users/`,
         headers: getters.authHeader,
       })
       .then((res) => {
@@ -124,6 +128,7 @@ export default new Vuex.Store({
     followFunc(context) {
       context.commit('FOLLOW_FUNC')
     },
+    // 리뷰 관련
     createReview({getters, state}, payload) {
       axios({
         method: 'post',
@@ -151,6 +156,21 @@ export default new Vuex.Store({
       })
       .then((res) => {
         commit('GET_REVIEW', res.data)
+        
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    reviewDelete({getters}, review) {
+      axios({
+        method: 'delete',
+        url:`${API_URL}/movies/review/${review.id}/`,
+        headers: getters.authHeader,
+        data: {...review},
+      })
+      .then((res) => {
+        console.log(res)
       })
       .catch((err) => {
         console.log(err)

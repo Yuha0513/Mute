@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div class="sign_container">
         <div class="signupzone">
-            <h2>회원가입</h2>
+            <h2 class="signup_h2">회원가입</h2>
             <form @submit.prevent="signUp">
             <label for="username">아이디 : </label>
             <input type="text" id="username" v-model="username"> <br>
@@ -50,7 +50,8 @@ export default {
 </script>
 
 <style>
-.container {
+.sign_container {
+    display: flex;
     margin-top: 70px;
     flex-direction: row;
     align-items: center;
@@ -58,12 +59,20 @@ export default {
     
 }
 .signupzone {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
     width: 500px;
     height: 700px;
     border: solid 1px gray;
     border-radius: 3px;
     margin-right: 10px;
     box-shadow: 3px 3px 3px 3px gray;
+}
+.signup_h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 /* .adzone {
     width: 500px;

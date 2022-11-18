@@ -26,7 +26,7 @@ export default {
     // },
     computed: {
       userInfo() {
-        return this.$store.getters.userInfo
+        return this.$store.state.user
       },
       is_followed() {
         return this.$store.state.is_followed
@@ -34,6 +34,7 @@ export default {
     },
     created() {
       this.$store.dispatch('getUser')
+ 
     },
     methods: {
       followFunc() {

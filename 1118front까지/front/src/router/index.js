@@ -7,7 +7,7 @@ import MovieView from '../views/MovieView'
 import SignupView from '../views/SignupView'
 import HomeView from '../views/HomeView.vue'
 import MovieCardView from '../views/MovieCardView'
-import MovieReviewView from '../views/MovieReviewView'
+
 
 
 Vue.use(VueRouter)
@@ -42,11 +42,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
-  },
-  {
-    path: '/review/:id',
-    name: 'review',
-    component: MovieReviewView
   },
   {
     path:'/movies/:id',
