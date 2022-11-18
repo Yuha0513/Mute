@@ -87,6 +87,8 @@ export default new Vuex.Store({
       })
       .catch((err) => {
         console.log(err)
+        const error = JSON.stringify(err.response.data)
+        alert(error)
       })
     },
     getUser({commit, getters}) {
@@ -139,10 +141,11 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    getReview(context) {
+    getReview(context, movieID) {
+      console.log(movieID)
       axios({
         method: 'get',
-        url:`${API_URL}/movies/reviews/`
+        url:`${API_URL}/movies/${movieID}/review_list_create`
       })
       .then((res) => {
         context.commit('GET_REVIEW', res.data)

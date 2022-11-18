@@ -1,6 +1,6 @@
 <template>
     <div class="login_container">
-        <div class="main">
+        <div class="login_main">
             <h3 class="logo">Login</h3>
             <form @submit.prevent class="container">
                 <input type="text" id="username" v-model="username" class="account" placeholder="아이디">                
@@ -46,7 +46,7 @@ export default {
     flex-direction: column;
     align-items: center;
 }
-.main {
+.login_main {
     margin-top: 30px;
     width: 350px;
     height: 400px;

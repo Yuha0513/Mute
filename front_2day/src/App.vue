@@ -12,7 +12,7 @@
             <li><router-link :to="{ name: 'user' }">user</router-link></li>
             <li><router-link :to="{ name: 'signup' }">회원가입</router-link></li>
             <li><router-link :to="{ name: 'login' }">로그인</router-link></li>
-            <li><button @click="logout">logout</button></li>
+            <li v-if="!isLogin"><button @click="logout">logout</button></li>
         </ul>
 
         <ul class="navbar__icons">

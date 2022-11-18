@@ -22,6 +22,7 @@ export default {
       return {
         title: '',
         content: '',
+        
       }
     },
     methods: {
@@ -43,7 +44,8 @@ export default {
       }
     },
     created() {
-      this.$store.dispatch('getReview')
+      const movieid = this.movieID
+      this.$store.dispatch('getReview',movieid)
     }
 }
 </script>

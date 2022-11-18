@@ -1,6 +1,7 @@
 <template>
   <div>
     <div v-for="movie in movies" :key="movie.id">
+        <!-- <img :src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${ movie.poster_path }"> -->
         {{ movie.title }}
         <button class="movie_button"><router-link :to="{ name: 'detail', params: { id:movie.id }}"> detail </router-link></button>
     </div>
@@ -18,6 +19,11 @@ export default {
         movies() {
             return this.$store.state.movies
         },
+    },
+    data() {
+        return{
+            image_url: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${ this.movie.poster_path }`
+        }
     },
     methods: {
         getMovies() {

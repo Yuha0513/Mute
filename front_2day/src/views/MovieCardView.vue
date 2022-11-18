@@ -1,7 +1,8 @@
 <template>
   <div>
     <!-- <img :src="movie.poster_path"> -->
-    {{ movie }}
+    
+ 
     <MovieReview
     :movieID="movie?.id"
     />
@@ -21,7 +22,6 @@ export default {
     data() {
         return {
             movie: null,
-            
         }
     },
     methods: {
