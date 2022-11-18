@@ -1,12 +1,12 @@
 <template>
     <div class="login_container">
         <div class="login_main">
-            <h3 class="logo">Login</h3>
-            <form @submit.prevent class="container">
+            <h3 class="login_logo">Login</h3>
+            <form @submit.prevent class="form_container">
                 <input type="text" id="username" v-model="username" class="account" placeholder="아이디">                
                 <input type="password" id="password" v-model="password" class="account" placeholder="비밀번호">
                 <input type="submit" class='account' id="login" value="logIn" @click="logIn ">
-                <p class="suggest">Don't Have an Account? <router-link :to="{ name: 'signup'}">signup</router-link></p>
+                <p class="suggest">Don't Have an Account? <router-link :to="{ name: 'signup'}" class="suggets_link">signup</router-link></p>
             </form>
 
 
@@ -49,29 +49,31 @@ export default {
 .login_main {
     margin-top: 30px;
     width: 350px;
-    height: 400px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     border: 1px solid lightgrey;
     border-radius: 5px;
+   
 }
 
-.logo {
+.login_logo {
     margin-top: 0px;
-    margin-bottom: 40px;
+    height: 10px;
 }
 
 #login {
-    width: 100%;
+    width: 200px;
     background-color: rgb(93, 216, 169);
     border-color: transparent;
     color: white;
-    margin-top: 20px;
+    
 }
 
 .account {
+    width: 190px;
     display: block;
     margin-bottom: 3px;
     padding: 3px;
@@ -82,5 +84,14 @@ export default {
 .suggest {
     color: gray;
     font-size: small;
+}
+.form_container {
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.suggets_link {
+    color: rgb(81, 180, 142);
 }
 </style>
