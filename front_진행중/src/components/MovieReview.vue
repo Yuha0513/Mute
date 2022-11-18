@@ -1,15 +1,19 @@
 <template>
   <div class="container">
     <h3>comment</h3>
-    <form @submit.prevent class="formbox">
+    <form @submit.prevent class="review_formbox">
         <input type="text" v-model="title">
         <input type="text" v-model="content">
         <button @click="createReview">제출</button>
     </form>
     <hr>
-    <div>
-      review list
-      {{ reviews }}
+    <div v-for="review in reviews" :key="review.id" >
+      <ul>
+        <li @click="reviewDetail"> 제목 : {{ review.title}} </li>
+        <li> 작성자 : {{review.userName}} </li>
+      </ul>
+      <hr>
+      
     </div>
   </div>
 
@@ -17,12 +21,11 @@
 
 <script>
 export default {
-    name: 'MovieComment',
+    name: 'MovieReview',
     data() {
       return {
         title: '',
         content: '',
-        
       }
     },
     methods: {
@@ -33,6 +36,12 @@ export default {
           movieID: this.movieID
         }
         this.$store.dispatch('createReview', payload)
+        this.title = '',
+        this.content = ''
+      },
+      reviewDetail() {
+        const movieid = this.movieID
+        this.$router.push({ name: 'review', params: { id:movieid }})
       }
     },
     props: {
@@ -54,7 +63,7 @@ export default {
 /* .container {
 
 } */
-.formbox {
+.review_formbox {
     display: flex;
     flex-direction: column;
     width: 300px;

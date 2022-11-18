@@ -1,11 +1,14 @@
 <template>
   <div>
-    <!-- <img :src="movie.poster_path"> -->
-    
+    <div class='movie_detail'>
+        {{movie?.title}}
+    </div>
+    <div class="review_box">
+        <MovieReview
+        :movieID="movie.id"
+        />
+    </div>
  
-    <MovieReview
-    :movieID="movie?.id"
-    />
   </div>
 </template>
 
@@ -14,7 +17,6 @@ import axios from 'axios'
 import MovieReview from '@/components/MovieReview'
 
 const API_URL = 'http://127.0.0.1:8000'
-
 
 
 export default {
@@ -36,18 +38,38 @@ export default {
             .catch((err) => {
                 console.log(err)
             })
-        }
-    },
+        },
+        // getToken: function () {
+        //     const token = localStorage.getItem('jwt')
+        //     const config = {
+        //         headers: {
+        //         Authorization: `JWT ${token}`
+        //         },
+        //     }
+        //     return config
+        // },
+        },
     created() {
         this.getMovieDetail()
     },
     components: {
         MovieReview
-    }
+    },
+    
 
 }
 </script>
 
 <style>
+.movie_detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.review_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 </style>

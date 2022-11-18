@@ -126,7 +126,7 @@ export default new Vuex.Store({
     createReview({getters, state}, payload) {
       axios({
         method: 'post',
-        url:`${API_URL}/movies/movies/${payload.movieID}/reviews/`,
+        url:`${API_URL}/movies/${payload.movieID}/review_list_create/`,
         data: {
           user: state.user.pk,
           title: payload.title,
@@ -136,19 +136,22 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res)
+        // router.push({name: 'detail', params: { id:payload.movieID }})
       })
       .catch((err) => {
         console.log(err)
       })
     },
-    getReview(context, movieID) {
+    getReview({commit, getters}, movieID) {
       console.log(movieID)
       axios({
         method: 'get',
-        url:`${API_URL}/movies/${movieID}/review_list_create`
+        // url:`${API_URL}/movies/${movieID}/review_list_create`,
+        url:`${API_URL}/movies/reviews/`,
+        headers: getters.authHeader,
       })
       .then((res) => {
-        context.commit('GET_REVIEW', res.data)
+        commit('GET_REVIEW', res.data)
         console.log(res.data)
       })
       .catch((err) => {

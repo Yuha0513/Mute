@@ -1,15 +1,20 @@
 <template>
   <div>
     <div v-for="movie in movies" :key="movie.id">
-        <!-- <img :src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${ movie.poster_path }"> -->
+
         {{ movie.title }}
+        <MoviePoster
+        v-for="movie in movies" :key="movie.id"
+        :movie="movie"
+        />
+
         <button class="movie_button"><router-link :to="{ name: 'detail', params: { id:movie.id }}"> detail </router-link></button>
     </div>
   </div>
 </template>
 
 <script>
-
+import MoviePoster from '@/components/MoviePoster'
 // import 'swiper/dist/css/swiper.css'
 // import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
@@ -19,10 +24,13 @@ export default {
         movies() {
             return this.$store.state.movies
         },
+        poster() {
+            return this.image_url
+        }
     },
     data() {
         return{
-            image_url: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${ this.movie.poster_path }`
+            image_url: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/`
         }
     },
     methods: {
@@ -33,6 +41,9 @@ export default {
     created() {
         this.getMovies()
     },
+    components: {
+        MoviePoster
+    }
     // components: {
     //     swiper,
     //     swiperSlide

@@ -1,12 +1,12 @@
 <template>
   <div>
-    trip
+    movieReview
   </div>
 </template>
 
 <script>
 export default {
-    name: 'TripView'
+  name:'MovieReviewView'
 }
 </script>
 
