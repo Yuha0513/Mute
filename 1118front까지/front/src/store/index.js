@@ -8,6 +8,8 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 const API_URL = 'http://127.0.0.1:8000'
+const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
+const YOUTUBE_API = 'AIzaSyCtKyasqUV71di9blJvH4oM1oLYI9WUjgc' 
 
 
 export default new Vuex.Store({
@@ -21,6 +23,7 @@ export default new Vuex.Store({
     isLogined: false,
     is_followed: false,
     reviews: null,
+    youtubeVideos: [],
   },
   getters: {
     authHeader: (state) => ({ Authorization: `Token ${state.token}` }),
@@ -50,7 +53,8 @@ export default new Vuex.Store({
     },
     GET_REVIEW (state, reviews) {
       state.reviews = reviews
-    }
+    },
+    GET_YOUTUBE: (state, res) => state.youtubeVideos = res.data.items
   },
   actions: {
     // 영화 리스트 가져오기
@@ -171,6 +175,26 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    getYoutube(context, searchText) {
+      const params = {
+        q: searchText+'movie',
+        key: YOUTUBE_API,
+        part: 'snippet',
+        type: 'video',
+      }
+      axios({
+        method: 'get',
+        url: YOUTUBE_URL,
+        params,
+      })
+      .then((res) => {
+        // console.log(res.data.items)
+        context.commit('GET_YOUTUBE', res)
       })
       .catch((err) => {
         console.log(err)

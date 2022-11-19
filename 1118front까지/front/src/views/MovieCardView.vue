@@ -2,7 +2,15 @@
   <div>
     <div class='movie_detail'>
         {{movie?.title}}
+        {{movie}}
     </div>
+    <hr>
+    <div>
+        <YoutubeList
+        :movyoutube=movie_Youtube
+        />
+    </div>
+    <hr>
     <div class="review_box">
         <MovieReview
         :movieID="movie.id"
@@ -15,6 +23,7 @@
 <script>
 import axios from 'axios'
 import MovieReview from '@/components/MovieReview'
+import YoutubeList from '@/components/YoutubeList'
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -25,6 +34,7 @@ export default {
         return {
             movie: null,
             movie_poster: null,
+            movie_Youtube: null,
         }
     },
     methods: {
@@ -35,21 +45,13 @@ export default {
             })
             .then((res) => {
                 this.movie = res.data
+                this.movie_Youtube = res.data.title
             })
             .catch((err) => {
                 console.log(err)
             })
         },
-        // getToken: function () {
-        //     const token = localStorage.getItem('jwt')
-        //     const config = {
-        //         headers: {
-        //         Authorization: `JWT ${token}`
-        //         },
-        //     }
-        //     return config
-        // },
-        },
+    },
     created() {
         this.getMovieDetail()
         console.log(this?.movie)
@@ -57,7 +59,7 @@ export default {
         
     },
     components: {
-        MovieReview
+        MovieReview, YoutubeList
     },
     
 
