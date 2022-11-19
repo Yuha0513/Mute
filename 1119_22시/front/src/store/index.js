@@ -24,6 +24,7 @@ export default new Vuex.Store({
     is_followed: false,
     reviews: null,
     youtubeVideos: [],
+    genres: [],
   },
   getters: {
     authHeader: (state) => ({ Authorization: `Token ${state.token}` }),
@@ -57,6 +58,7 @@ export default new Vuex.Store({
     },
     GET_YOUTUBE: (state, res) => state.youtubeVideos = res.data.items,
     DELETE_TOKEN: (state) => state.token = '',
+    GET_GENRE: (state, genres) => state.genres = genres
   },
   
   actions: {
@@ -223,6 +225,34 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    getLikeMovie({getters}) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/yourmovie/`,
+        headers: getters.authHeader,
+      })
+      .then((res) => {
+        getters
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    getGenre(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/genres/`,
+        headers: context.getters.authHeader,
+      })
+      .then((res) => {
+        context.commit('GET_GENRE', res.data)
+        // console.log(res)
       })
       .catch((err) => {
         console.log(err)

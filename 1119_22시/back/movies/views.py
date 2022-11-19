@@ -2,7 +2,7 @@ from django.shortcuts import render
 from functools import partial
 from django.shortcuts import render
 from .models import Actor, Movie, Genre, Review
-from .serializers import ActorListSerializer, ActorSerializer, MovieListSerializer, MovieSerializer, ReviewListSerializer, ReviewSerializer
+from .serializers import ActorListSerializer, ActorSerializer, MovieListSerializer, MovieSerializer, ReviewListSerializer, ReviewSerializer, GenreListSerializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -21,6 +21,13 @@ def home(request):
         movies = Movie.objects.all()
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
+
+# 르
+@api_view(['GET'])
+def genre_list(request):
+    genres = get_list_or_404(Genre)
+    serializer = GenreListSerializer(genres, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 # 배우
 # 1. 배우 목록

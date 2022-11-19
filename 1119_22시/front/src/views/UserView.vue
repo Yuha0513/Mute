@@ -12,11 +12,14 @@
       <p id="usercontent">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna ip sum dolore.</p>
       <p id="usercontent">Connec dolore ipsum faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.</p>
     </div>
+    <LikeList/>
   </div>
   
 </template>
 
 <script>
+import LikeList from '@/components/LikeList'
+
 export default {
     name: 'UserView',
     // methods: {
@@ -41,6 +44,9 @@ export default {
         this.$store.dispatch('followFunc')
       }
     },
+    components: {
+      LikeList
+    }
 }
 </script>
 

@@ -11,6 +11,9 @@ urlpatterns = [
     # 홈 페이지
     path('', views.home),
 
+    #장르
+    path('genres/', views.genre_list),
+
     # 배우
     path('actors/', views.actor_list),
     path('actors/<int:actor_pk>/', views.actor_detail),
