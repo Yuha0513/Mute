@@ -146,11 +146,11 @@ def yourmovie(request):
     recommend_movies_num += 1
     if recommend_movies_num == 10:
       break
-  context = {
-    'movies':context_movie,
-  }
-  return JsonResponse(context)
+  # context = {
+  #   'movies':context_movie,
+  # }
   # return Response(context)
+  return Response(context_movie)
 
 # 좋아하는 장르를 선택하게 해서 영화 추천
 # 1. 내가 좋아하는 장르 선택 ( 장르 선택 버튼 만들어서 (좋아요 버튼 처럼) -> 해당 장르 영화들의 목록을 넘겨줌 )

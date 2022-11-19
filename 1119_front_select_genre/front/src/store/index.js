@@ -25,6 +25,7 @@ export default new Vuex.Store({
     reviews: null,
     youtubeVideos: [],
     genres: [],
+    select_genre_movies: [],
   },
   getters: {
     authHeader: (state) => ({ Authorization: `Token ${state.token}` }),
@@ -36,7 +37,8 @@ export default new Vuex.Store({
         state.isLogined = false
       }
     },
-    reviews: (state) => state.reviews
+    reviews: (state) => state.reviews,
+    genres: (state) => state.genres,
   },
   mutations: {
     GET_MOVIES: (state, movies) => state.movies = movies,
@@ -56,9 +58,21 @@ export default new Vuex.Store({
     GET_REVIEW (state, reviews) {
       state.reviews = reviews
     },
-    GET_YOUTUBE: (state, res) => state.youtubeVideos = res.data.items,
+    GET_YOUTUBE: (state, res) => state.youtubeVideos.push(res.data.items),
     DELETE_TOKEN: (state) => state.token = '',
-    GET_GENRE: (state, genres) => state.genres = genres
+    GET_GENRE (state, genres) {
+      state.genres = genres
+    } ,
+    SELECT_GENRE(state, movie) {
+      if (state.select_genre_movies.length === 0) {
+        state.select_genre_movies.push(movie)
+      }
+      else if (state.select_genre_movies.length >= 1) {
+        state.select_genre_movies = []
+        state.select_genre_movies.push(movie)
+      }
+      console.log(movie)
+    },
   },
   
   actions: {
@@ -252,11 +266,41 @@ export default new Vuex.Store({
       })
       .then((res) => {
         context.commit('GET_GENRE', res.data)
-        // console.log(res)
+        console.log(this.genres)
       })
       .catch((err) => {
         console.log(err)
       })
+    },
+    // selectGenre({state, getters}, genre) {
+    //   console.log(state.user.pk)
+    //   console.log(genre.id)
+    //   axios({
+    //     method: 'post',
+    //     url: `${API_URL}/movies/${state.user.pk}/${genre.name}/like/`,
+    //     headers: getters.authHeader,
+    //     data: {
+    //       user_id: state.user.pk,
+    //       genre_id: genre.id
+    //     }
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // }
+    selectGenre(context, genre) {
+      context.state.movies.forEach(function(movie) {
+        movie.genres.forEach(function(element) {
+          if (element === genre.id) {
+            context.commit('SELECT_GENRE', movie)
+          }
+        })
+        // context.commit('SELECT_GENRE', payload)
+        })
+      
     }
   },
   modules: {
