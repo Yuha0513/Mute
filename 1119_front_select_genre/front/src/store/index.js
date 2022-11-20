@@ -63,15 +63,8 @@ export default new Vuex.Store({
     GET_GENRE (state, genres) {
       state.genres = genres
     } ,
-    SELECT_GENRE(state, movie) {
-      if (state.select_genre_movies.length === 0) {
-        state.select_genre_movies.push(movie)
-      }
-      else if (state.select_genre_movies.length >= 1) {
-        state.select_genre_movies = []
-        state.select_genre_movies.push(movie)
-      }
-      console.log(movie)
+    SELECT_GENRE(state, movies) {
+      state.select_genre_movies = movies
     },
   },
   
@@ -292,14 +285,17 @@ export default new Vuex.Store({
     //   })
     // }
     selectGenre(context, genre) {
+      const selectmovieList = []
       context.state.movies.forEach(function(movie) {
         movie.genres.forEach(function(element) {
           if (element === genre.id) {
-            context.commit('SELECT_GENRE', movie)
+            selectmovieList.push(movie)
           }
         })
         // context.commit('SELECT_GENRE', payload)
-        })
+      })
+      context.commit('SELECT_GENRE', selectmovieList)
+      // console.log(selectmovieList)
       
     }
   },

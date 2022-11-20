@@ -1,12 +1,11 @@
 <template>
   <div> 좋아요 한 영화
     <ul 
-      v-for="(selectmovie, index) in selectedGenreMovie"
-      :key="index"
+
     >
     <li>
       <!-- <img :src="poster_url"> -->
-      {{ selectmovie.title }}
+      {{ selectedGenreMovie[0].title }}
     </li>
     </ul>
     <div
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-
+import _ from 'lodash'
 
 export default {
   name: 'LikeList',
@@ -44,7 +43,7 @@ export default {
       return this.$store.state.genres
     },
     selectedGenreMovie() {
-      return this.$store.state.select_genre_movies
+      return _.sampleSize(this.$store.state.select_genre_movies, 1)
     }
   },
 
