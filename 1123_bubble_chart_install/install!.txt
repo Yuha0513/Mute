@@ -1,0 +1,14 @@
+### npm install (NEW!)
+
+npm i bootstrap@4.4.1
+
+npm i bootstrap-vue@2.1.0
+
+npm i babel-eslint@10.0.3
+
+### 컴포넌트 설명
+
+- ChartBase (상위 컴포넌트) 현재 경로: componenets/Trip폴더
+    - GenreChart (하위 컴포넌트): components/Trip폴더
+    - GenreLegend: components/Trip폴더
+- movie_statistics.csv 파일을 public 폴더 안에 위치시키기
