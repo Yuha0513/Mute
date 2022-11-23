@@ -40,6 +40,8 @@ export default {
   methods: {
     goMovieDetail() {
       this.$router.push({ name: 'detail', params: { id:this.movie.id }})
+      this.$store.dispatch('checkLikeMovie', this.movie.id)
+      console.log(this.movie.id)
     }
   }
 

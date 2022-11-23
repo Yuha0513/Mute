@@ -2,12 +2,12 @@
   <div class="review_container">
     <h4>당신의 리뷰를 남겨주세요</h4>
     <hr>
-    <div v-for="review in reviews" :key="review.id" class="review_area">
-      <ul>
-        <li> 작성자 : <span @click="goUserProfile(review.userName, $event)">{{review.userName}}</span></li>
-        <li> {{ review.content }} </li>
-        <button @click="reviewDelete(review, $event)">delete</button>
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" @click="getReviewid(review, $event)">update</button>
+    <div v-for="review in reviews" :key="review.id">
+      <ul class="review_area">
+        <li class="user_review"> 작성자 : <span @click="goUserProfile(review.userName, $event)">{{review.userName}}</span></li>
+        <li class="user_review"> {{ review.content }} </li>
+        <button @click="reviewDelete(review, $event)" class="small_button">삭제</button>
+        <button data-bs-toggle="modal" class="small_button" data-bs-target="#exampleModal" @click="getReviewid(review, $event)">수정</button>
       </ul>
       
       
@@ -34,7 +34,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="reviewUpdate" data-bs-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-primary"  @click="reviewUpdate" data-bs-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>
@@ -192,8 +192,8 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   font-family: inherit;
-  margin-left: 5px;
-  margin-top: 80px;
+  /* margin-left: 5px; */
+  margin-top: 20px;
   /* margin-bottom: 100px; */
 }
 
@@ -206,6 +206,7 @@ button.big-button {
   background: var(--colorShadeE);
   transform-style: preserve-3d;
   transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  margin-top: 70px;
 }
 button.big-button::before {
   position: absolute;
@@ -247,8 +248,63 @@ textarea {
 }
 .review_area{
   padding-top: 15px;
+  padding-bottom: 15px;
   margin-top: 15px;
   background-color:rgba(187, 232, 211, 0.493);
   border-radius: 7px;
+  /* width: 1100px;
+  height: 180px; */
+
+}
+.user_review {
+  margin-top: 10px;
+}
+
+button.small_button {
+  width: 40px;
+  height: 25px;
+  /* padding: 1em 2em; */
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  font-size: x-small;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+button.small_button::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--colorShadeC);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+  transform: translate3d(0, 0.75em, -1em);
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+
+button.small_button:hover {
+  background: var(--colorShadeD);
+  transform: translate(0, 0.375em);
+}
+
+button.small_button:hover::before {
+  transform: translate3d(0, 0.75em, -1em);
+}
+
+button.small_button:active {
+  transform: translate(0em, 0.75em);
+}
+
+button.small_button:active::before {
+  transform: translate3d(0, 0, -1em);
+
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
 }
 </style>

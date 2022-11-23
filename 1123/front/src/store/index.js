@@ -11,7 +11,7 @@ Vue.use(Vuex)
 
 const API_URL = 'http://127.0.0.1:8000'
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
-const YOUTUBE_API = 'AIzaSyCtKyasqUV71di9blJvH4oM1oLYI9WUjgc' 
+const YOUTUBE_API = 'AIzaSyBhLQfMyqvKTifR9T6YyXxZwP71faWk_2Y' 
 
 
 export default new Vuex.Store({
@@ -36,13 +36,14 @@ export default new Vuex.Store({
     userDetail: null,
     recommandMovie: [],
     otherInfo: [],
-    likeing: false,
+    likecolor: '',
   },
   getters: {
     authHeader: (state) => ({ Authorization: `Token ${state.token}` }),
     userInfo: (state) => state.user,
     reviews: (state) => state.reviews,
     genres: (state) => state.genres,
+    like: (state) => state.likecolor
 
   },
   mutations: {
@@ -83,7 +84,9 @@ export default new Vuex.Store({
     //   state.select_genre_movies = []
     // },
     GET_OTHER_INFO: (state, info) => state.otherInfo = info,
-    CHECK_FOLLOWER: (state, payload) => state.is_followed = payload
+    CHECK_FOLLOWER: (state, payload) => state.is_followed = payload,
+    CHANGE_COLOR: (state, color) => state.likecolor = color,
+    CHANGE_FOLLOW: (state, result) => state.is_followed = result
   },
   
   actions: {
@@ -95,7 +98,7 @@ export default new Vuex.Store({
       })
       .then((res) => {
         context.commit('GET_MOVIES', res.data)
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -272,7 +275,7 @@ export default new Vuex.Store({
     },
 
     //알고리즘에 들어갈 좋아요
-    postLikeMovies({getters, state, dispatch}, movie) {
+    postLikeMovies({commit, getters, state, dispatch}, movie) {
       // console.log(state.user.pk)
       // console.log(movie.title)
       axios({
@@ -287,6 +290,11 @@ export default new Vuex.Store({
       .then((res) => {
         console.log(res)
         dispatch('getLikeMovie')
+        if (res.data === true) {
+          commit('CHANGE_COLOR', 'red')
+        } else {
+          commit('CHANGE_COLOR', 'black')
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -300,6 +308,7 @@ export default new Vuex.Store({
       })
       .then((res) => {
         commit('GET_LIKE_MOVIE', res.data)
+        
       })
       .catch((err) => {
         console.log(err)
@@ -309,9 +318,11 @@ export default new Vuex.Store({
       const likemovies = context.state.like_movie
       likemovies.forEach(like => {
         if(like.id == movieid) {
-          context.state.likeing = true
+          console.log('맞음')
+          context.state.likecolor = 'red'
+          console.log(context.state.likecolor)
         } else {
-          context.state.likeing = false
+          context.state.likecolor = 'black'
         }
       });
     },
@@ -472,6 +483,7 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res)
+        context.commit('CHANGE_FOLLOW', res.data)
       })
       .catch((err) => {
         console.log(err)

@@ -7,13 +7,11 @@
             </div>
             <div class="movie_detail">
                 <span class="movie_detail_title">{{movie?.title}}</span> 
-                <span @click="postLikeMovies" class="fa-sharp fa-solid fa-heart" ></span>
-                <button @click="getlikemovie">get</button>
-                {{ like_ing }}
+                <span @click="postLikeMovies" class="fa-sharp fa-solid fa-heart" :style="`color:${this.$store.state.likecolor}`"></span>
                 <hr>
                 <p>
                     <MovieActor
-                    v-for="(actor, index) in movie.actors"
+                    v-for="(actor, index) in movie?.actors"
                     :key="index"
                     :actor="actor"
                     class="actor_name"
@@ -27,7 +25,7 @@
         <div class="third_body">
             <div class="bottom_youtubezone">
                 <YoutubeList
-                :movyoutube=movie.title
+                :movyoutube=movie?.title
                 />
             </div>
         </div>
@@ -63,7 +61,6 @@
               movie_poster: null,
               movie_Youtube: null,
               movie_id: null,
-              like_ing: false,
           }
       },
       methods: {
@@ -84,34 +81,25 @@
                   console.log(err)
               })
           },
-          postLikeMovies(event) {
-              this.$store.dispatch('postLikeMovies', this.movie)
+          postLikeMovies() {
+            // const color = this.$store.state.likecolor
+            this.$store.dispatch('postLikeMovies', this.movie)
             //   this.$store.dispatch('getLikeMovie')
-              this.checkLikeMovie()
-              if (this.like_ing === true) {
-                event.target.style = 'color: red'
-              } else {
-                console.log('no')
-              }
           },
-          checkLikeMovie() {
-            const check = this.$store.state.likeing
-            if (check === true) {
-                this.like_ing = true
-                
-            } else if (check === false) {
-                this.like_ing = false
-            }
+          checkColor() {
+            // const color = this.$store.state.likecolor
+             
         },
         getlikemovie() {
             this.$store.dispatch('getLikeMovie')
         },
+        
       },
       created() {
           this.getMovieDetail()
           this.movie_poster = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${ this.movie?.poster_path }`
           this.getlikemovie()
-          this.checkLikeMovie()
+        //   this.checkLike()
       },
       components: {
           MovieReview, YoutubeList, MovieActor
@@ -125,6 +113,9 @@
           },
           movieID() {
             return this.movie?.id
+          },
+          likeColored() {
+            return this.$store.getters.like
           }
       },
   }

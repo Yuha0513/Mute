@@ -16,7 +16,6 @@
       <p id="usercontent">
         <LikeList/>
       </p>
-      <button @click="getUserPic">ghkrdls</button>
       <router-link :to="{ name: 'userupdate' }"><button>정보 수정</button></router-link>
       <router-link :to="{ name: 'password' }"><button>비밀번호 변경</button></router-link>
     </div>
@@ -49,7 +48,8 @@ export default {
       },
       userimg2 () {
         return this.$store.state.userDetail.otherimg
-      }
+      },
+
     },
     created() {
       this.$store.dispatch('getUser')
@@ -57,7 +57,8 @@ export default {
     },
     methods: {
       followFunc() {
-        this.$store.dispatch('followFunc')
+        this.$store.dispatch('followUser')
+
       },
       getUserPic() {
         this.$store.dispatch('getUserPic')
@@ -65,7 +66,8 @@ export default {
     },
     components: {
       LikeList
-    }
+    },
+
 }
 </script>
 
